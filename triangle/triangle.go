@@ -1,0 +1,47 @@
+package triangle
+
+import (
+	"fmt"
+	"math"
+)
+
+const testVersion = 3
+
+func KindFromSides(a, b, c float64) Kind {
+	fmt.Printf("%#v ", a)
+	fmt.Printf("%#v ", b)
+	fmt.Println(c)
+	if !(a > 0 && b > 0 && c > 0) ||
+	    !(a + b >= c && a+c >= b && b+c >= a) || 
+	    (a == math.Inf(1) || b == math.Inf(1) || c == math.Inf(1)) {
+	    return Kind(NaT)
+        }
+	//3 equal sides
+	if (a == b && b == c){
+	    return Kind(Equ)
+	}
+	//2 equal sides
+	if (a == b || b == c || a == c){
+	    return Kind(Iso)
+	}
+	return Kind(Sca)
+}
+// Notice KindFromSides() returns this type. Pick a suitable data type.
+type Kind int
+
+const (
+	NaT = iota
+	Equ = iota
+	Iso = iota
+	Sca = iota
+)
+
+
+/*
+// Pick values for the following identifiers used by the test program.
+NaT // not a triangle
+Equ // equilateral
+Iso // isosceles
+Sca // scalene
+*/
+// Organize your code for readability.
